@@ -4,7 +4,7 @@
 
 ## 📚 Workflow Overview
 
-This workflow is designed to be cyclical for each section/chapter of the book involved.
+This workflow is designed to be cyclical for each section/chapter of the book involved. also site the link of the repo page and all and add it to the blog post.
 
 ### 1. Setup & Learning Phase
 **Trigger**: User selects a section (e.g., "Matrix Multiplication", "Data Parallelism").
@@ -19,6 +19,7 @@ This workflow is designed to be cyclical for each section/chapter of the book in
         *   Key Concepts (bullet points).
         *   Mathematical intuition.
         *   Code usage examples.
+        *   there will be questions and answers by me which you need to add in the blog post. and jax repo
 
 ### 2. Documentation Phase (Blog)
 **Trigger**: User says "make a blog post" or "section done".
@@ -44,6 +45,7 @@ This workflow is designed to be cyclical for each section/chapter of the book in
         *   "The Code": Embedded snippets from the implementation.
         *   "Why it Matters": Connection to large-scale training.
         *   Link to the specific folder in `Model_scaling_jax` GitHub repo.
+        *   there will be questions and answers by me which you need to add in the blog post. and jax repo
 
 ### 3. Publishing Phase
 **Trigger**: Blog post created and reviewed.
