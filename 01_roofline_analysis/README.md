@@ -2,6 +2,8 @@
 
 **From**: [How to Scale Your Model - Rooflines](https://jax-ml.github.io/scaling-book/roofline/)
 
+**My Q&A Document**: [Google Doc](https://docs.google.com/document/d/1ehl3ivkPN2CDPUw7smtvqstiPivIksT7wxGYRbFmypg/edit?usp=sharing)
+
 ## 🎯 Key Concepts
 
 This section introduces **roofline models** — a framework for understanding whether an operation is:
