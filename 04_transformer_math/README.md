@@ -135,7 +135,7 @@ This section crystallized the **economics** of LLM training:
 2. **Attention isn't the bottleneck** until `T > 8D` — for most training, MLPs dominate.
 3. **MoE's hidden cost**: You need `E/k` times the batch size to be compute-bound (3840 tokens for DeepSeek!).
 
-At Samsung, when we estimate training costs, we're basically estimating `6 × 37B × 14.8T` and dividing by hardware FLOPs/s. The rest is just accounting.
+
 
 ---
 
