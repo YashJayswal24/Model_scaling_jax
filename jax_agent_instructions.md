@@ -26,7 +26,7 @@ This workflow is designed to be cyclical for each section/chapter of the book in
 
 *   **Context**:
     *   Use the code and README from the current section.
-    *   Follow the `@/customize.agent` and `@/customize.agent.extension` workflows.
+    *   Follow the `al-folio\.agent\workflows\customize.agent.extension.md` and `al-folio\.agent\workflows\customize.agent.md` workflows.
 *   **Action**:
     *   Create a new post in `C:\Yash\Projects\Portfoli\al-folio\_posts\`.
     *   **Filename**: `YYYY-MM-DD-[topic-slug].md`.
