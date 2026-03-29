@@ -1,0 +1,743 @@
+\documentclass[11pt, a4paper]{article}
+
+% ─── Encoding & Fonts ─────────────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% ─── Page Layout ──────────────────────────────────────────────────────────────
+\usepackage[
+  top=2.4cm, bottom=2.4cm,
+  left=2.6cm, right=2.6cm
+]{geometry}
+
+% ─── Colors ───────────────────────────────────────────────────────────────────
+\usepackage[dvipsnames, table]{xcolor}
+\definecolor{accent}{HTML}{4F46E5}      % indigo
+\definecolor{accent2}{HTML}{7C3AED}     % violet
+\definecolor{accentbg}{HTML}{EDE9FE}    % lavender bg
+\definecolor{codebg}{HTML}{1E1B4B}      % dark navy
+\definecolor{codefg}{HTML}{E0E7FF}      % light blue text
+\definecolor{covergrad}{HTML}{312E81}   % cover bg
+\definecolor{successbg}{HTML}{F0FDF4}
+\definecolor{successborder}{HTML}{22C55E}
+\definecolor{warnbg}{HTML}{FFFBEB}
+\definecolor{warnborder}{HTML}{D97706}
+\definecolor{infobg}{HTML}{EFF6FF}
+\definecolor{infoborder}{HTML}{3B82F6}
+\definecolor{tipbg}{HTML}{FAF5FF}
+\definecolor{tipborder}{HTML}{9333EA}
+\definecolor{rowlight}{HTML}{F8FAFC}
+\definecolor{highlightrow}{HTML}{EDE9FE}
+\definecolor{badgegreenBG}{HTML}{DCFCE7}
+\definecolor{badgegreenFG}{HTML}{166534}
+\definecolor{badgeredBG}{HTML}{FEE2E2}
+\definecolor{badgeredFG}{HTML}{991B1B}
+\definecolor{badgepurpleBG}{HTML}{EDE9FE}
+\definecolor{badgepurpleFG}{HTML}{5B21B6}
+\definecolor{badgeamberBG}{HTML}{FEF3C7}
+\definecolor{badgeamberFG}{HTML}{92400E}
+\definecolor{tablehead}{HTML}{4F46E5}
+\definecolor{mutedtext}{HTML}{64748B}
+\definecolor{bordercolor}{HTML}{E2E8F0}
+
+% ─── Graphics & TikZ ──────────────────────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{calc, fadings}
+
+% ─── Tables ───────────────────────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{colortbl}
+
+% ─── Code Listings ────────────────────────────────────────────────────────────
+\usepackage{listings}
+\lstdefinestyle{codestyle}{
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\small\color{codefg},
+  keywordstyle=\color{cyan!70!white}\bfseries,
+  stringstyle=\color{green!60!white},
+  commentstyle=\color{gray!60!white}\itshape,
+  numberstyle=\tiny\color{gray!50!white},
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  frame=none,
+  xleftmargin=12pt,
+  xrightmargin=8pt,
+  aboveskip=8pt,
+  belowskip=6pt,
+  rulecolor=\color{accent},
+  framexleftmargin=4pt,
+  framesep=4pt,
+}
+\lstset{style=codestyle}
+
+% ─── Callout / tcolorbox ──────────────────────────────────────────────────────
+\usepackage[most]{tcolorbox}
+
+\tcbset{
+  calloutbase/.style={
+    enhanced, breakable,
+    boxrule=0.4pt, arc=5pt,
+    left=10pt, right=10pt, top=8pt, bottom=8pt,
+    fontupper=\small,
+    before upper={\setlength{\parskip}{4pt}},
+  }
+}
+
+\newtcolorbox{calloutwarning}{calloutbase,
+  colback=warnbg, colframe=warnborder,
+  borderline west={3pt}{0pt}{warnborder},
+}
+\newtcolorbox{calloutsuccess}{calloutbase,
+  colback=successbg, colframe=successborder,
+  borderline west={3pt}{0pt}{successborder},
+}
+\newtcolorbox{calloutinfo}{calloutbase,
+  colback=infobg, colframe=infoborder,
+  borderline west={3pt}{0pt}{infoborder},
+}
+\newtcolorbox{callouttip}{calloutbase,
+  colback=tipbg, colframe=tipborder,
+  borderline west={3pt}{0pt}{tipborder},
+}
+
+% ─── Section Formatting ───────────────────────────────────────────────────────
+\usepackage{titlesec}
+\titleformat{\section}
+  {\Large\bfseries\color{black}}
+  {\colorbox{accent}{\textcolor{white}{\textbf{\thesection}}}~}
+  {0pt}{}[\vspace{-2pt}\textcolor{bordercolor}{\rule{\linewidth}{1.2pt}}]
+\titlespacing{\section}{0pt}{18pt}{8pt}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{black}}
+  {\textcolor{accent}{\thesubsection}}
+  {8pt}{}
+\titlespacing{\subsection}{0pt}{14pt}{5pt}
+
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{accent2}}
+  {}
+  {0pt}{}
+\titlespacing{\subsubsection}{0pt}{10pt}{3pt}
+
+% ─── Lists ────────────────────────────────────────────────────────────────────
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=16pt, itemsep=2pt, topsep=4pt}
+\setlist[enumerate]{leftmargin=16pt, itemsep=2pt, topsep=4pt}
+
+% ─── Hyperlinks ───────────────────────────────────────────────────────────────
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=accent,
+  urlcolor=accent,
+  citecolor=accent2,
+  pdftitle={MoE Scaling on TPU — Run Report},
+  pdfauthor={YashJayswal24},
+  pdfsubject={JAX TPU Systems Engineering},
+}
+
+% ─── Misc ─────────────────────────────────────────────────────────────────────
+\usepackage{parskip}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{mdframed}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+% ─── Header / Footer ──────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{mutedtext}{MoE Scaling on TPU --- Run Report}}
+\fancyhead[R]{\small\textcolor{mutedtext}{Part 10 · \textit{How To Scale Your Model}}}
+\fancyfoot[C]{\small\textcolor{mutedtext}{Page \thepage\ of \pageref{LastPage}}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{bordercolor}\leaders\hrule height \headrulewidth\hfill}}
+
+% ─── Helpers ──────────────────────────────────────────────────────────────────
+\newcommand{\codeinline}[1]{\texttt{\small\colorbox{accentbg}{\textcolor{accent}{#1}}}}
+\newcommand{\badgegreen}[1]{\colorbox{badgegreenBG}{\small\textcolor{badgegreenFG}{\textbf{#1}}}}
+\newcommand{\badgered}[1]{\colorbox{badgeredBG}{\small\textcolor{badgeredFG}{\textbf{#1}}}}
+\newcommand{\badgepurple}[1]{\colorbox{badgepurpleBG}{\small\textcolor{badgepurpleFG}{\textbf{#1}}}}
+\newcommand{\badgeamber}[1]{\colorbox{badgeamberBG}{\small\textcolor{badgeamberFG}{\textbf{#1}}}}
+
+% ─── Table helpers ────────────────────────────────────────────────────────────
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+\newcommand{\thead}[1]{\textcolor{white}{\textbf{#1}}}
+
+% Row color alternating
+\newcommand{\roweven}{\rowcolor{rowlight}}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\begin{document}
+
+% ─────────────────────────────────────────────────────────────── COVER PAGE ───
+\begin{titlepage}
+\pagecolor{covergrad}
+\color{white}
+
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[white!8!covergrad, opacity=0.3]
+    (current page.north east) circle (9cm);
+  \fill[white!5!covergrad, opacity=0.2]
+    ([xshift=6cm, yshift=-4cm]current page.south west) circle (7cm);
+\end{tikzpicture}
+
+\vspace*{2.5cm}
+
+{\small\textcolor{white!60!covergrad}{\textbf{TECHNICAL RUN REPORT \quad · \quad PART 10}}}
+
+\vspace{0.8cm}
+
+{\fontsize{36pt}{42pt}\selectfont\bfseries
+MoE Scaling on TPU\\[6pt]
+\textcolor{white!70!blue}{with JAX Parallelism}}
+
+\vspace{0.6cm}
+
+{\large\textcolor{white!80!covergrad}
+A systems-level implementation study of Mixture-of-Experts routing,\\
+collective matmuls, and explicit communication control\\
+on TPU v5e-8 hardware.}
+
+\vspace{1.8cm}
+
+% Meta cards
+\begin{minipage}[t]{0.48\linewidth}
+  \begin{tcolorbox}[
+    colback=white!10!covergrad, colframe=white!25!covergrad,
+    arc=8pt, boxrule=0.6pt, top=8pt, bottom=8pt, left=12pt, right=12pt,
+  ]
+    {\footnotesize\textcolor{white!60!covergrad}{\textbf{HARDWARE}}}\\[3pt]
+    {\small\textbf{Kaggle TPU v5e-8 · 8 cores}}
+  \end{tcolorbox}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\linewidth}
+  \begin{tcolorbox}[
+    colback=white!10!covergrad, colframe=white!25!covergrad,
+    arc=8pt, boxrule=0.6pt, top=8pt, bottom=8pt, left=12pt, right=12pt,
+  ]
+    {\footnotesize\textcolor{white!60!covergrad}{\textbf{EXECUTED}}}\\[3pt]
+    {\small\textbf{2026-03-29 · 72\,s runtime}}
+  \end{tcolorbox}
+\end{minipage}
+
+\vspace{0.5cm}
+
+\begin{minipage}[t]{0.48\linewidth}
+  \begin{tcolorbox}[
+    colback=white!10!covergrad, colframe=white!25!covergrad,
+    arc=8pt, boxrule=0.6pt, top=8pt, bottom=8pt, left=12pt, right=12pt,
+  ]
+    {\footnotesize\textcolor{white!60!covergrad}{\textbf{KAGGLE NOTEBOOK}}}\\[3pt]
+    {\small\textbf{reptor420/moe-scaling-on-tpu}}
+  \end{tcolorbox}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\linewidth}
+  \begin{tcolorbox}[
+    colback=white!10!covergrad, colframe=white!25!covergrad,
+    arc=8pt, boxrule=0.6pt, top=8pt, bottom=8pt, left=12pt, right=12pt,
+  ]
+    {\footnotesize\textcolor{white!60!covergrad}{\textbf{KEY RESULT}}}\\[3pt]
+    {\small\textbf{43$\times$ MoE speedup (73\,ms $\to$ 1.7\,ms)}}
+  \end{tcolorbox}
+\end{minipage}
+
+\vfill
+
+\textcolor{white!50!covergrad}{\rule{3cm}{2pt}}
+
+\vspace{0.5cm}
+
+{\small\textcolor{white!70!covergrad}{Based on:}}\\
+{\normalsize\textbf{Part 10 --- All About JAX}}\\
+{\small\textcolor{white!80!covergrad}{\textit{How To Scale Your Model} · Austin et al., Google DeepMind, 2025}}\\
+{\footnotesize\textcolor{white!60!covergrad}{\url{https://jax-ml.github.io/scaling-book/jax-stuff/}}}
+
+\vspace{0.4cm}
+
+{\small\textcolor{white!70!covergrad}{GitHub:} \url{https://github.com/YashJayswal24/Model_scaling_jax}}
+
+\vspace{1cm}
+
+\end{titlepage}
+
+\pagecolor{white}\color{black}
+\thispagestyle{empty}
+\tableofcontents
+\newpage
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Hardware \& Environment}
+
+\begin{center}
+\begin{tabular}{l l l}
+  \toprule
+  \rowcolor{tablehead}
+  \thead{Property} & \thead{Value} \\
+  \midrule
+  \roweven Accelerator & TPU v5e-8 \\
+  Devices & 8 $\times$ TpuDevice, process\_index=0, coords (0,0,0)$\to$(1,3,0) \\
+  \roweven PJRT API version & 0.69 (framework 0.90) \\
+  Python & 3.12 (papermill execution) \\
+  \roweven Key env flag & \codeinline{LIBTPU\_INIT\_ARGS=--xla\_tpu\_enable\_async\_collective\_fusion=true} \\
+  Profiler traces & 9 separate Perfetto traces (AOT-compiled) \\
+  \roweven Total runtime & 72 seconds (25 cells) \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\begin{calloutwarning}
+\textbf{⚠ Transparent hugepages not enabled.} TPU v5e runtime startup/shutdown latency was degraded.
+Fix: \texttt{sudo sh -c "echo always > /sys/kernel/mm/transparent\_hugepage/enabled"}
+\end{calloutwarning}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Three JAX Parallelism Modes}
+
+The book identifies three contracts between programmer and JAX runtime for multi-device execution:
+
+\begin{center}
+\begin{tabularx}{\linewidth}{L{2.8cm} L{3.5cm} L{4.5cm} L{2.8cm}}
+  \toprule
+  \rowcolor{tablehead}
+  \thead{Mode} & \thead{API} & \thead{Who decides communication?} & \thead{Errors on ambiguity?} \\
+  \midrule
+  \roweven \textbf{Auto} & \codeinline{jax.jit} (Auto axes) & XLA / Shardy compiler & No --- may silently do wrong thing \\
+  \textbf{Explicit} & \codeinline{jax.jit} (Explicit axes) & JAX type system & \textbf{Yes} --- errors on ambiguous sharding \\
+  \roweven \textbf{Manual} & \codeinline{jax.shard\_map} & \textbf{You} --- fully explicit & N/A --- you write every byte \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+This notebook exercises all three modes, matching the book's pedagogical progression. Each mode's limitation motivates the next.
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Problem 1 --- Sharded Average \& Roll-Diff}
+
+\textbf{Reference:} \S Worked Problems, Problem 1 \quad \textbf{Mesh:} $(x=2, y=4)$, AxisType.Explicit
+
+\subsection{Per-Shard Average}
+
+Array $A: \texttt{float32}[S_X, D_Y]$ sharded across the mesh. Goal: return $[X, Y]$ where each entry is the mean of shard $(i, j)$.
+
+\subsubsection{With jax.jit (reshape trick)}
+
+\begin{lstlisting}[language=Python]
+@jax.jit
+def average(arr):
+    # Reshape [x, p, y, q] -> mean over local (non-sharded) dims (1, 3)
+    arr = jnp.mean(arr, axis=(1, 3))
+    return jax.lax.with_sharding_constraint(arr, P('x', 'y'))
+\end{lstlisting}
+
+\subsubsection{With shard\_map (device-local view)}
+
+\begin{lstlisting}[language=Python]
+@jax.shard_map(in_specs=jax.P('x','y'), out_specs=jax.P('x','y'))
+def avg_shard_map(arr):
+    assert arr.shape == (p, q)          # each device sees only its shard
+    return jnp.mean(arr).reshape((1, 1))
+\end{lstlisting}
+
+\textbf{Result:} \codeinline{[[4.5, 6.5, 8.5, 10.5], [20.5, 22.5, 24.5, 26.5]]} \checkmark --- zero communication on both.
+
+\begin{calloutinfo}
+\textbf{Key insight:} With \texttt{shard\_map}, the absence of any \texttt{psum} / \texttt{all\_gather} / \texttt{ppermute} in the function body \emph{proves} zero communication. This is impossible to verify with \texttt{jax.jit} without reading the compiled HLO.
+\end{calloutinfo}
+
+\subsection{Roll-Difference via shard\_map}
+
+\begin{lstlisting}[language=Python]
+@jax.shard_map(
+    in_specs=(jax.P('x','y'), jax.P('x','y'), jax.P()),
+    out_specs=jax.P('x','y')
+)
+def roll_diff(base, roll, shift):
+    return base - jnp.roll(roll, shift=shift, axis=0)
+# Result (shift=1): rows alternate between -8 and +8  checkmark
+\end{lstlisting}
+
+Profiler traces saved: \codeinline{/kaggle/working/shardmap\_avg/} and \codeinline{/kaggle/working/roll\_diff/}.
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Problem 2 --- Mixture of Experts Routing}
+
+\textbf{Reference:} \S Worked Problems, Problem 2 \quad \textbf{Mesh:} $(x=8, y=1)$
+
+\subsection{Dimensions}
+
+\begin{center}
+\begin{tabular}{C{1.5cm} C{2cm} L{7cm}}
+  \toprule
+  \rowcolor{tablehead}
+  \thead{Symbol} & \thead{Value} & \thead{Description} \\
+  \midrule
+  \roweven $E$ & 8 & Total experts (one per device) \\
+  $S$ & 2048 & Total tokens ($S_x = 256$ per device) \\
+  \roweven $D$ & 4096 & Hidden dimension \\
+  $F$ & 14336 & Expert output dimension (Llama-8B FFN proxy) \\
+  \roweven $N$ & 8 & Number of devices \\
+  $C$ & 32 & Expert capacity --- tokens per communication round \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Naive jit MoE --- 73\,ms}
+
+The natural scan-based approach iterates over all $E$ experts with a binary mask:
+
+\begin{lstlisting}[language=Python]
+def process_exp(carry, e):
+    mask = (B == e)[:, None]   # [S, 1] -- which tokens belong to expert e
+    to_add = A @ W[e]           # [S, F] -- ALL tokens x expert e's matrix
+    return carry + to_add * mask, None   # E-1 results are thrown away
+
+out, _ = jax.lax.scan(process_exp, output, jnp.arange(E))
+\end{lstlisting}
+
+\textbf{What XLA did:} auto-sharding assigned \emph{both} $A$ and $W$ along axis $x$ (data-parallel). This forced an AllGather of all activations before the scan --- $O(S \times D)$ memory replicated per device.
+
+\begin{calloutwarning}
+\textbf{Observed latency: 73\,ms.} The AllGather alone dominates. At production scale ($S=10^6$, $D=8192$), this would replicate gigabytes of activations across every device on every forward pass.
+\end{calloutwarning}
+
+\subsection{Pipelined All-to-All --- 1.7\,ms \quad (43$\times$ faster)}
+
+Instead of gathering all activations, use explicit \textbf{All-to-All} to route only the tokens belonging to each expert.
+
+\subsubsection{Three-Phase Pipeline}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{L{2.5cm} L{3cm} X}
+  \toprule
+  \rowcolor{tablehead}
+  \thead{Phase} & \thead{Name} & \thead{Description} \\
+  \midrule
+  \roweven \textbf{Phase 1} & PreFetch & Sort tokens by expert, bin into $[E, C, D]$ chunk, fire first All-to-All $\to [E_x, N{\cdot}C, D]$ \\
+  \textbf{Phase 2} & Unrolled Pipeline & Python \texttt{for}-loop: compute current chunk while fetching next. XLA overlaps comm + compute in the flattened graph. \\
+  \roweven \textbf{Phase 3} & Drain & Process last pre-fetched chunk, reverse All-to-All $\to [E, C, F]$, scatter back to $[S_x, F]$ \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\subsubsection{Key Communication Code}
+
+\begin{lstlisting}[language=Python]
+# Forward dispatch: send tokens to expert-owning devices
+recv_A = jax.lax.all_to_all(
+    send_A, axis_name='x', split_axis=0, concat_axis=1
+)  # [E, C, D]  ->  [E_x, N*C, D]
+
+# Dense local matmul -- zero wasted compute
+recv_Out = jnp.einsum('edf,ecd->ecf', W_local, recv_A)
+
+# Backward return: results back to origin devices
+recv_Back = jax.lax.all_to_all(
+    recv_Out, axis_name='x', split_axis=1, concat_axis=0
+)  # [E_x, N*C, F]  ->  [E, C, F]
+
+# Pipelined overlap (Python loop = unrolled in XLA graph)
+for i in range(num_scan_steps):
+    carry_out = compute_and_scatter(recv_A_curr, valid_curr,
+                                    safe_idx_curr, carry_out)  # math first
+    recv_A_curr, valid_curr, safe_idx_curr = fetch_chunk(i+1) # comm second
+\end{lstlisting}
+
+\begin{calloutsuccess}
+\textbf{Observed latency: 1.7\,ms.} A \textbf{43$\times$ speedup} over the naive AllGather approach. AOT-compiled via \texttt{.lower(W, A, B).compile()} for clean, JIT-warmup-free profiling. Trace: \texttt{MoE\_chunk\_all\_to\_all/}.
+\end{calloutsuccess}
+
+\subsection{Top-$k$ MoE ($k=2$) --- Zero Overhead}
+
+Extension to Top-2 routing (each token processed by 2 experts, averaged):
+
+\begin{lstlisting}[language=Python]
+flat_B = B_local.reshape(-1)              # [S_x, 2] -> [S_x * 2]
+flat_A = jnp.repeat(A_local, k, axis=0)  # duplicate each token k times
+# ... same All-to-All pipeline ...
+final_out = jnp.mean(final_out_k, axis=1)  # average k expert outputs
+\end{lstlisting}
+
+\textbf{Observed latency: $\approx$1.7\,ms} --- identical to Top-1. The pipeline processes $2\times$ the tokens at the same capacity $C$ with the same number of communication rounds.
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Problem 3 --- Collective Matmuls \& Overlapped MLP}
+
+\textbf{Reference:} \S Worked Problems, Problem 3 \quad \textbf{Dims:} $BX=D=4096,\ F=14336$ (Llama-8B proxy)
+
+\subsection{Baseline --- jax.jit Auto-Sharded MLP (1.2\,ms)}
+
+\begin{lstlisting}[language=Python]
+# Mesh (x=4, y=2), AxisType.Auto
+@jax.jit
+def compute_mlp(In, Win, Wout):
+    return jax.lax.with_sharding_constraint(In @ Win @ Wout, sharding)
+# In -> P('x','y')   Win -> P(None,'y')   Wout -> P('y',None)
+# Profiler: jit_MLP_Auto_Shard/ -- 1.2 ms total
+#   AllReduce: ~0.2 ms  |  AllGather: ~0.1 ms
+\end{lstlisting}
+
+\subsection{AllReduce Matmul via shard\_map}
+
+Implements $A[BX,DY] \cdot W[DY,F] \to \text{Out}[BX,F]$:
+
+\begin{lstlisting}[language=Python]
+@jax.shard_map(
+    in_specs=(P('x','y'), P('y',None)), out_specs=P('x',None)
+)
+def compute_matmul_allreduce(A, W):
+    return jax.lax.psum(A @ W, axis_name='y')   # local matmul + AllReduce
+\end{lstlisting}
+
+\subsection{ReduceScatter --- Three Variants}
+
+For the down-projection $\text{Tmp}[BX,FY] \cdot W_2[FY,D] \to \text{Out}[BX,DY]$:
+
+\begin{center}
+\begin{tabularx}{\linewidth}{L{3.5cm} X C{2.5cm}}
+  \toprule
+  \rowcolor{tablehead}
+  \thead{Variant} & \thead{Mechanism} & \thead{Latency} \\
+  \midrule
+  \roweven \textbf{psum\_scatter} & JAX built-in hardware-optimized primitive & \textbf{1.01\,ms} \checkmark \\
+  Manual ring (unidirectional) & $y-1$ \texttt{ppermute} steps rightward; Python loop & 1.2\,ms \\
+  \rowcolor{highlightrow} \textbf{Recursive halving} (bidirectional) & $\log_2(y)$ XOR-partner exchanges; array halves each step & \textbf{$\approx$1.1\,\textmu s} \checkmark \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+The recursive halving pattern uses XOR to select partners --- a classic butterfly all-reduce:
+
+\begin{lstlisting}[language=Python]
+for step in reversed(range(int(math.log2(y)))):
+    # XOR partner: device i exchanges with i XOR 2^step
+    perm = tuple((j, j ^ (1 << step)) for j in range(y))
+    recv_data = jax.lax.ppermute(send_data, axis_name='y', perm=perm)
+    state = keep_data + recv_data   # array shrinks by 2x each step
+# After log2(y) steps: [BX, D] -> [BX, DY], fully summed and placed
+\end{lstlisting}
+
+\subsection{End-to-End Overlapped Transformer MLP (1.25\,ms)}
+
+Composing AllGather up-projection + recursive halving ReduceScatter down-projection with GeLU:
+
+\begin{lstlisting}[language=Python]
+# Up-projection: AllGather along y to reconstruct full D dimension
+In_gathered = jax.lax.all_gather(In_local, axis_name='y', tiled=True, axis=1)
+act_local = jax.nn.gelu(In_gathered @ Win_local)   # [BX, FY_local]
+
+# Down-projection: recursive halving ReduceScatter
+final_out = compute_matmul_recursive_halving_rs(act_local, Wout_local)
+# Out: [BX, DY] -- correct sharding at JIT-speed parity
+\end{lstlisting}
+
+\begin{callouttip}
+\textbf{Why no speedup?} XLA already performs compute-communication overlap on TPU internally. Our manual overlap adds \emph{transparency} --- every byte is visible in Perfetto --- but not raw speed. The value is correctness guarantees and communication auditability.
+\end{callouttip}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Full Performance Summary}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{C{0.4cm} L{4.8cm} C{2cm} L{2.8cm} L{3cm}}
+  \toprule
+  \rowcolor{tablehead}
+  \thead{\#} & \thead{Experiment} & \thead{Latency} & \thead{vs Baseline} & \thead{Profiler Folder} \\
+  \midrule
+  \rowcolor{badgeredBG}
+  1 & Naive \texttt{jit} MoE (AllGather) & \textbf{73\,ms} & \badgered{Baseline} & \texttt{MoE\_auto/} \\
+  \rowcolor{badgepurpleBG}
+  \textbf{2} & \textbf{Pipelined All-to-All MoE ($k=1$)} & \textbf{1.7\,ms} & \badgegreen{43$\times$ faster} & \texttt{MoE\_chunk\_all\_to\_all/} \\
+  \roweven
+  3 & Top-$k$ MoE ($k=2$) & $\approx$1.7\,ms & \badgegreen{0\% overhead} & \texttt{MoE\_chunk\_all\_to\_all\_topk/} \\
+  4 & \texttt{jit} Auto-Sharded MLP & 1.2\,ms & \badgeamber{Baseline} & \texttt{jit\_MLP\_Auto\_Shard/} \\
+  \roweven
+  5 & AllReduce Matmul (\texttt{psum}) & --- & --- & \texttt{experimental\_al\_reduce/} \\
+  6 & ReduceScatter (\texttt{psum\_scatter}) & 1.01\,ms & \badgegreen{16\% vs ring} & \texttt{..\_psum/} \\
+  \roweven
+  7 & ReduceScatter (manual ring) & 1.2\,ms & --- & \texttt{..\_matmul/} \\
+  8 & ReduceScatter (recursive halving) & $\approx$1.1\,\textmu s & \badgepurple{Near optimum} & \texttt{..\_halving\_rs/} \\
+  \roweven
+  9 & Overlapped Transformer MLP & 1.25\,ms & \badgepurple{JIT parity} & \texttt{transformer\_mlp/} \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{CV-Style Achievements \& Contributions}
+
+\subsection{\faTrophy\ Performance Wins}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{X C{2cm} C{2cm} L{3.5cm}}
+  \toprule
+  \rowcolor{tablehead}
+  \thead{Achievement} & \thead{Before} & \thead{After} & \thead{Result} \\
+  \midrule
+  \roweven
+  MoE routing: AllGather $\to$ All-to-All pipeline & 73\,ms & 1.7\,ms & \badgegreen{\faRocket\ 43$\times$ faster} \\
+  ReduceScatter: manual ring vs \texttt{psum\_scatter} & 1.2\,ms & 1.01\,ms & \badgegreen{16\% reduction} \\
+  \roweven
+  Bidirectional halving vs unidirectional ring & 1.2\,ms & $\approx$1.1\,\textmu s & \badgepurple{Near optimum} \\
+  Top-$k$ MoE ($k=2$) vs Top-1 overhead & 1.7\,ms & 1.7\,ms & \badgegreen{0\% --- free scaling} \\
+  \roweven
+  Total notebook runtime on TPU v5e-8 & --- & 72\,s & 25 cells, 9 Perfetto traces \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{\faClipboardList\ Work Completed (10 Tasks)}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{C{0.4cm} L{4.5cm} L{4cm} L{3.5cm}}
+  \toprule
+  \rowcolor{tablehead}
+  \thead{\#} & \thead{Task} & \thead{APIs Used} & \thead{Scale} \\
+  \midrule
+  \roweven 1 & Sharded average via \texttt{jax.jit} (reshape trick) & \texttt{jit}, \texttt{with\_sharding\_constraint} & 8 TPUs, ($2{\times}4$) mesh \\
+  2 & Same average via \texttt{shard\_map} --- 0 comms verified & \texttt{shard\_map}, \texttt{jnp.mean} & 8 shards, 0 AllGather \\
+  \roweven 3 & Intra-shard roll-difference & \texttt{shard\_map}, \texttt{jnp.roll} & shift=1, 8 shards \\
+  4 & Naive MoE profiled --- AllGather bottleneck found & \texttt{lax.scan}, \texttt{jax.profiler} & $E{=}8, S{=}2048, D{=}4096$ \\
+  \roweven 5 & 3-phase pipelined All-to-All MoE & \texttt{shard\_map}, \texttt{lax.all\_to\_all}, AOT & $C{=}32$, \textbf{43$\times$ speedup} \\
+  6 & Top-$k$ routing ($k=2$) with token duplication & \texttt{jnp.repeat}, reshape + mean & $2{\times}$ token expansion \\
+  \roweven 7 & AllReduce matmul via \texttt{psum} & \texttt{shard\_map}, \texttt{lax.psum} & $BX{=}D{=}4096, F{=}14336$ \\
+  8 & ReduceScatter in 3 variants & \texttt{psum\_scatter}, \texttt{ppermute}, \texttt{dynamic\_slice} & $4{\times}2$ mesh, 4-way ring \\
+  \roweven 9 & Overlapped Transformer MLP with GeLU & \texttt{all\_gather}, recursive RS, \texttt{gelu} & Full Llama-8B proxy dims \\
+  10 & 9 AOT-compiled Perfetto traces & \texttt{.lower().compile()}, \texttt{profiler.trace} & All runs JIT-warmup free \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{\faTools\ Code Quality Improvements}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{L{1.8cm} L{4.5cm} L{3.5cm} L{3cm}}
+  \toprule
+  \rowcolor{tablehead}
+  \thead{Severity} & \thead{Issue} & \thead{Fix} & \thead{Risk If Ignored} \\
+  \midrule
+  \rowcolor{badgeredBG}
+  \badgered{Critical} & \codeinline{LIBTPU\_INIT\_ARGS} set twice --- 2nd silently kills 1st & Combine into single space-separated string & \texttt{async\_all\_to\_all} \textbf{never active} during entire run \\
+  \roweven \badgeamber{API} & \texttt{jax.lax.pvary} deprecated (2 cells) & \texttt{jax.lax.pcast(..., to='varying')} & Breaks on next JAX upgrade \\
+  \badgeamber{UX} & 8 terse markdown headers (e.g.\ \texttt{"part 1"}) & Replace with \texttt{\#\#} headings + results tables & Notebook unreadable when shared \\
+  \roweven \badgepurple{Missing} & No notebook title or citation cell & Add header cell with book link & No attribution or reproducibility \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{\faRulerCombined\ Technical Concepts Demonstrated}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{L{5cm} L{4.5cm} L{3.5cm}}
+  \toprule
+  \rowcolor{tablehead}
+  \thead{Concept} & \thead{Where Used} & \thead{Book Section} \\
+  \midrule
+  \roweven All 3 JAX parallelism modes & Problems 1, 2, 3 & \S How Does Parallelism Work \\
+  \texttt{shard\_map} explicit communication & 6 of 10 experiments & Manual sharding mode \\
+  \roweven All 4 collective types (AR, AG, RS, A2A) & Throughout & Part 10 Collective examples \\
+  Expert Parallelism with capacity buckets & MoE All-to-All pipeline & Problem 2 solution \\
+  \roweven Compute-comm overlap (unrolled Python loops) & MoE pipeline + ring RS & Collective Matmul example \\
+  Bidirectional butterfly ($\log_2 N$ steps) & Recursive halving RS & Problem 4 \\
+  \roweven AOT compilation + Perfetto tracing & All 9 profiler runs & Part 9 --- Profiling \\
+  Llama-8B proxy dims ($D{=}4096, F{=}14336$) & Problem 3 & Applied Training \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Bug Fixes \& API Updates}
+
+\begin{lstlisting}[language=Python]
+# === BUG: Second assignment silently kills first ===
+os.environ["LIBTPU_INIT_ARGS"] = "--xla_tpu_enable_async_all_to_all=true"
+os.environ["LIBTPU_INIT_ARGS"] = "--xla_tpu_enable_async_collective_fusion=true"
+# async_all_to_all was NEVER enabled during the entire run!
+
+# === FIX: Combine into one string ===
+os.environ["LIBTPU_INIT_ARGS"] = (
+    "--xla_tpu_enable_async_all_to_all=true "
+    "--xla_tpu_enable_async_collective_fusion=true"
+)
+
+# === DEPRECATED API ===
+initial_out = jax.lax.pvary(initial_out, 'x')          # DEPRECATED
+
+# === CURRENT API ===
+initial_out = jax.lax.pcast(initial_out, to='varying')  # CORRECT
+\end{lstlisting}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Resources \& Citation}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{L{3.5cm} X}
+  \toprule
+  \rowcolor{tablehead}
+  \thead{Resource} & \thead{Link} \\
+  \midrule
+  \roweven Kaggle Notebook & \url{https://www.kaggle.com/code/reptor420/moe-scaling-on-tpu} \\
+  Implementation Folder & \url{https://github.com/YashJayswal24/Model_scaling_jax/tree/main/10_jax_parallelism_moe} \\
+  \roweven JAX Scaling Book (Part 10) & \url{https://jax-ml.github.io/scaling-book/jax-stuff/} \\
+  Full Repo & \url{https://github.com/YashJayswal24/Model_scaling_jax} \\
+  \roweven Portfolio Blog Post & \url{https://yashjayswal24.github.io/portfolio/blog/2026/jax-parallelism-moe} \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\vspace{12pt}
+
+\begin{tcolorbox}[
+  colback=accentbg, colframe=accent,
+  arc=6pt, boxrule=0.8pt,
+  title={\textcolor{white}{\textbf{BibTeX Citation}}},
+  fonttitle=\bfseries,
+  attach boxed title to top left={yshift=-2mm, xshift=6mm},
+  boxed title style={colback=accent, arc=4pt},
+]
+\begin{lstlisting}[language=TeX, basicstyle=\ttfamily\small\color{accent2}]
+@article{scaling-book,
+  title     = {How to Scale Your Model},
+  author    = {Austin, Jacob and Douglas, Sholto and Frostig, Roy and
+               Levskaya, Anselm and Chen, Charlie and Vikram, Sharad and
+               Lebron, Federico and Choy, Peter and Ramasesh, Vinay and
+               Webson, Albert and Pope, Reiner},
+  publisher = {Google DeepMind},
+  year      = {2025},
+  note      = {https://jax-ml.github.io/scaling-book/}
+}
+\end{lstlisting}
+\end{tcolorbox}
+
+% ──────────────────────────────────────────────────────────────── END ─────────
+\vfill
+\begin{center}
+  \textcolor{mutedtext}{\small
+    \textit{MoE Scaling on TPU --- Run Report} \quad · \quad
+    Part 10 of \textit{How To Scale Your Model} \quad · \quad
+    YashJayswal24 \quad · \quad 2026-03-29
+  }
+\end{center}
+
+\end{document}
